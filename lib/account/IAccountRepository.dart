@@ -1,3 +1,4 @@
+import 'package:just_do_it/account/AccountDbRepository.dart';
 import 'package:just_do_it/account/AccountMemRepository.dart';
 
 import '../db/AppDatabase.dart';
@@ -9,4 +10,4 @@ abstract class IAccountRepository {
   Future<User?>queryUserByPhone(String phone);
 }
 
-final account = AccountMemRepository();
+final account = AccountDbRepository();

@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <application
-        android:label="just_do_it"
+        android:label="做了吗"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

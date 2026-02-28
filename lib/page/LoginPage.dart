@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:just_do_it/account/IAccountRepository.dart';
-import 'package:just_do_it/page/HomePage.dart';
+import 'package:just_do_it/consts/Const.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -46,21 +47,20 @@ class _LoginPageState extends State<LoginPage> {
             setState(() {
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(SnackBar(content: Text("账号或密码错误")));
+              ).showSnackBar(const SnackBar(content: Text("账号或密码错误")));
             });
             return;
           }
         }
 
         if (isSuccess) {
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setBool(SP_KEY_IS_LOGIN, true);
           setState(() {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text("登录成功，欢迎回家！")));
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
+            ).showSnackBar(const SnackBar(content: Text("登录成功，欢迎回家！")));
+            Navigator.pop(context);
           });
         }
       } else {
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text("请输入有效的手机号")));
+          ).showSnackBar(const SnackBar(content: Text("请输入有效的手机号")));
         });
       }
     } catch (e) {
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text("登录失败，请稍后重试")));
+        ).showSnackBar(const SnackBar(content: Text("登录失败，请稍后重试")));
       });
     }
   }
@@ -91,10 +91,10 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 100),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 100),
               child: Center(
-                child: const Text(
+                child: Text(
                   "您好，欢迎登录",
                   style: TextStyle(
                     fontSize: 32,
@@ -104,7 +104,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
             TextField(
               keyboardType: TextInputType.phone,
               controller: _phoneController,
@@ -116,17 +115,16 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 hintText: "请输入手机号",
                 labelText: "手机号",
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black26),
                 ),
                 errorText: _phoneError,
                 // 显示错误信息
-                errorBorder: OutlineInputBorder(
+                errorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.red), // 红色边框
                 ),
               ),
             ),
-
             const SizedBox(height: 30),
             TextField(
               controller: _psdController,
@@ -139,7 +137,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
             const SizedBox(height: 25),
             ElevatedButton(
               style: ButtonStyle(

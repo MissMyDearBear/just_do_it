@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       title: 'Bear Assist',
-      routes: {'/': (context) => LoginPage(), '/home': (context) => HomePage()},
+      routes: {'/': (context) =>const HomePage(), '/login': (context) =>const LoginPage()},
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
